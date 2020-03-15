@@ -19,6 +19,4 @@ git push -u origin master
 git push origin master
  
 从远程库克隆：
-
-
-创建分支:
+git clone https://github.com/liying8040/cpp_git.git
