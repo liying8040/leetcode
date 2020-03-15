@@ -1,7 +1,7 @@
 ### 本地操作：
 
 在本地创建文件夹，并在当前目录下添加希望上传的文件，例如，readme.md  
-打开git bash，并进入当前文件夹目录（可利用pwd查看当前路径）    
+打开git bash，并进入当前文件夹目录（可利用`pwd`查看当前路径）    
 `git init`							//将当前目录变成 git 可以管理的仓库  
 `git add readme.md`		//将 readme.md 从工作区提交至暂存区  
 `git commit -m "如何使用git"`	//从暂存区提交至本地master分支的仓库，并添加说明  
