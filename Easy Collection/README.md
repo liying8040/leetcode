@@ -1,6 +1,6 @@
 ###  Easy Collection
 
-* Array
+* [Array](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/array.md)
 
 * Strings
 
