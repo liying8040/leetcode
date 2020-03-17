@@ -1,6 +1,4 @@
-# Easy Collection
-
-#### Array
+# array
 
 (1) Remove Duplicates from Sorted Array
 

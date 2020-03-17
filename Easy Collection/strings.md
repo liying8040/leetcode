@@ -1,3 +1,2 @@
-# Easy Collection
+# strings
 
-#### Strings
