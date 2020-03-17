@@ -57,3 +57,68 @@ public:
 };
 ```
 
+(3) Rotate Array
+
+Given an array, rotate the array to the right by k steps, where k is non-negative.
+
+```
+Input: [1,2,3,4,5,6,7] and k = 3
+Output: [5,6,7,1,2,3,4]
+Explanation:
+rotate 1 steps to the right: [7,1,2,3,4,5,6]
+rotate 2 steps to the right: [6,7,1,2,3,4,5]
+rotate 3 steps to the right: [5,6,7,1,2,3,4]
+```
+
+```c++
+class Solution {
+public:
+    void rotate_all(vector<int> &nums, int start, int end){
+        while(start < end)
+            swap(nums[start++], nums[end--]);
+    }
+    void rotate(vector<int>& nums, int k) {
+        k = k % nums.size();                   // k要取模
+        rotate_all(nums, 0, nums.size()-1);
+        rotate_all(nums, 0, k-1);
+        rotate_all(nums, k, nums.size()-1);
+    }
+};
+```
+
+
+
+(4) Contains Duplicate
+
+Given an array of integers, find if the array contains any duplicates.
+
+```
+Input: [1,2,3,1]
+Output: true
+```
+
+```C++
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        if(nums.size() == 0) return false;
+        sort(nums.begin(), nums.end());
+        for(size_t i = 0; i < nums.size() - 1; ++i){
+            if(nums[i] == nums[i+1])
+                return true;
+        }
+        return false;
+        
+    }
+};
+```
+
+```c++
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        set<int> sets(nums.begin(), nums.end());   //set具有有序性，唯一性
+        return nums.size() != sets.size();
+    }
+};//相较于上一种方法，该方法的runtime和memory都更大。
+```
+
