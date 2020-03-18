@@ -122,3 +122,77 @@ public:
 };//相较于上一种方法，该方法的runtime和memory都更大。
 ```
 
+(5) Single Number
+
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+```
+Input: [4,1,2,1,2]
+Output: 4
+```
+
+```C++
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int res = nums[0];
+        for(size_t i = 1; i < nums.size(); ++i)
+            res ^= nums[i]; //异或所有的值
+        return res;
+    }
+};
+```
+
+(6) Intersection of Two Arrays II
+
+Given two arrays, write a function to compute their intersection.
+
+```
+Input: nums1 = [4,9,4], nums2 = [9,4,9,8,4]
+Output: [4,9,4]
+```
+
+```C++
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> res;
+        for(auto i : nums1){
+            auto iter = find(nums2.begin(), nums2.end(), i); //依次寻找nums1中的每个值是否在nums2中出现
+            if(iter != nums2.end()){
+                res.push_back(i);
+                nums2.erase(iter);
+            }
+        }
+        return res;
+    }
+};
+
+```
+
+```c++
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        map<int, int> maps; // key中存nums1的不重复值，value存每个值出现的次数。
+        vector<int> res;
+        for(size_t i = 0; i < nums1.size(); ++i){
+            auto iter = maps.find(nums1[i]);
+            if(iter == maps.end())
+                maps.insert({nums1[i],1});
+            else
+                maps[nums1[i]]++;
+        }
+        for(size_t i = 0; i < nums2.size(); ++i){
+            if(maps.find(nums2[i]) != maps.end()){
+                if(maps[nums2[i]] > 0){
+                    res.push_back(nums2[i]);
+                    maps[nums2[i]] --;
+                }
+            }       
+        }
+        return res;
+    }
+};
+```
+
