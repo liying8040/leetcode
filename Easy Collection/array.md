@@ -196,3 +196,61 @@ public:
 };
 ```
 
+(7) Plus One
+
+Given a **non-empty** array of digits representing a non-negative integer, plus one to the integer.
+
+```
+Input: [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+```
+
+```C++
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        if(digits.size() == NULL) return digits;
+        int carry = 1;
+        for(int i = digits.size() - 1; i >= 0; --i){
+            int temp = (digits[i] + carry) % 10;
+            carry = (digits[i] + carry) / 10;
+            digits[i] = temp;
+        }
+        if(carry > 0){
+            digits.insert(digits.begin(),{1});
+        }
+        return digits;
+    }
+};
+```
+
+(8) Move Zeroes
+
+Given an array `nums`, write a function to move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.
+
+```
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+```
+
+```C++
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int slow = 0, fast = 0;			//快慢指针
+        while(fast < nums.size()){
+            if(nums[fast] != 0){
+                if(slow != fast)
+                    swap(nums[slow++], nums[fast++]);
+                else{
+                    slow++;
+                    fast++;
+                }
+            }else
+                fast++;
+        } 
+    }
+};
+```
+
