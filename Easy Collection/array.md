@@ -15,8 +15,8 @@ class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
         if(nums.size() == NULL) return 0;
-        int slow = 0;							//快慢指针
-        for(int fast = 1; fast < nums.size(); ++fast){
+        int slow = 0;							
+        for(int fast = 1; fast < nums.size(); ++fast){     //快慢指针
             if(nums[fast] > nums[slow]){
                 slow ++;
                 if(slow != fast)
@@ -225,7 +225,7 @@ public:
 };
 ```
 
-(8) Move Zeroes
+(8) Move Zeros
 
 Given an array `nums`, write a function to move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.
 
@@ -250,6 +250,171 @@ public:
             }else
                 fast++;
         } 
+    }
+};
+```
+
+```C++
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int slow = 0;
+        for(int fast = 1; fast < nums.size(); ++fast){   //快慢指针
+            if(nums[slow] != 0)
+                slow ++;
+            if(nums[slow] == 0 && nums[fast] != 0 && slow != fast)
+                swap(nums[slow], nums[fast]);
+        }
+    }
+};
+```
+
+(9) Two Sum
+
+Given an array of integers, return **indices** of the two numbers such that they add up to a specific target.
+
+```
+Given nums = [3,3], target = 6.
+
+return [0, 1].
+```
+
+```C++
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        multimap<int, int> maps;                     // 关键字可重复出现
+        vector<int> res;
+        for(int i = 0; i < nums.size(); ++i){
+            maps.insert({nums[i], i});               //或 maps[nums[i]] = i;
+        }
+         for(auto beg = maps.begin(); beg != maps.end(); beg++){
+            auto iter = maps.find(target - beg->first);
+             if(iter != maps.end() && iter != beg){
+                 res.push_back(beg->second);
+                 res.push_back(iter->second);
+                 return res;
+             }
+        }
+        return res;
+    }
+};
+// set, map: 有序，唯一 
+// multiset, multimap: 有序，不唯一
+// unordered_set, unordered_map: 无序，唯一
+// unordered_multiset, unordered_multimap: 无序，不唯一
+```
+
+(10) Valid Sudoku
+
+Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated **according to the following rules**:
+
+1. Each row must contain the digits `1-9` without repetition.
+2. Each column must contain the digits `1-9` without repetition.
+3. Each of the 9 `3x3` sub-boxes of the grid must contain the digits `1-9` without repetition.
+
+```
+Input:
+[
+  ["5","3",".",".","7",".",".",".","."],
+  ["6",".",".","1","9","5",".",".","."],
+  [".","9","8",".",".",".",".","6","."],
+  ["8",".",".",".","6",".",".",".","3"],
+  ["4",".",".","8",".","3",".",".","1"],
+  ["7",".",".",".","2",".",".",".","6"],
+  [".","6",".",".",".",".","2","8","."],
+  [".",".",".","4","1","9",".",".","5"],
+  [".",".",".",".","8",".",".","7","9"]
+]
+Output: true
+```
+
+```C++
+class Solution { //wrong!!!
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        set<char> sets;
+        for(int i = 0; i < 9; i++){
+            sets.clear();
+            for(int j = 0; j < 9; j++){
+                if(board[i][j] != '.'){
+                    if(sets.find(board[i][j]) == sets.end())
+                        sets.insert(board[i][j]);
+                    else
+                        return false;
+                }
+            }
+        }
+        
+        for(int j = 0; j < 9; j++){
+            sets.clear();
+            for(int i = 0; i < 9; i++){
+                if(board[i][j] != '.'){
+                    if(sets.find(board[i][j]) == sets.end())
+                        sets.insert(board[i][j]);
+                    else
+                        return false;
+                }
+            }
+        }
+        
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                sets.clear();
+                for(int m = 0; m < 3; m++){
+                    for(int n = 0; n < 3; n++){
+                        if(board[i][j] != '.'){
+                            if(sets.find(board[i*3+m][j*3+n]) == sets.end())
+                                sets.insert(board[i*3+m][j*3+n]);
+                            else
+                                return false;
+                        }
+                    }
+                }
+
+            }
+        }
+        return true;
+        
+    }
+};
+```
+
+(11) Rotate Image
+
+You are given an *n* x *n* 2D matrix representing an image. Rotate the image by 90 degrees (clockwise).
+
+```
+Given input matrix = 
+[
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+],
+
+rotate the input matrix in-place such that it becomes:
+[
+  [7,4,1],
+  [8,5,2],
+  [9,6,3]
+]
+```
+
+```C++
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        for(int i = 0; i < n; i++){
+            for(int j = i+1; j < n; j++){
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n/2; j++){
+                swap(matrix[i][j], matrix[i][n-j-1]);
+            }
+        }
     }
 };
 ```
