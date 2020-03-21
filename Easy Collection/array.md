@@ -330,7 +330,7 @@ Output: true
 ```
 
 ```C++
-class Solution { //wrong!!!
+class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
         set<char> sets;
@@ -363,7 +363,7 @@ public:
                 sets.clear();
                 for(int m = 0; m < 3; m++){
                     for(int n = 0; n < 3; n++){
-                        if(board[i][j] != '.'){
+                        if(board[i*3+m][j*3+n] != '.'){
                             if(sets.find(board[i*3+m][j*3+n]) == sets.end())
                                 sets.insert(board[i*3+m][j*3+n]);
                             else
@@ -380,9 +380,35 @@ public:
 };
 ```
 
+```C++
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int used1[9][9] = {0};
+        int used2[9][9] = {0};
+        int used3[9][9] = {0};
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                if(board[i][j] != '.'){
+                    int num = board[i][j] - '0' - 1;
+                    int key = (i / 3) * 3 + (j / 3);
+                    if(used1[i][num] || used2[j][num] || used3[key][num])
+                        return false;
+                    else
+                        used1[i][num] = used2[j][num] = used3[key][num] = 1;
+                }
+            }
+        }
+        return true;
+    }
+};
+```
+
+
+
 (11) Rotate Image
 
-You are given an *n* x *n* 2D matrix representing an image. Rotate the image by 90 degrees (clockwise).
+You are given an *n* x *n* 2-D matrix representing an image. Rotate the image by 90 degrees (clockwise).
 
 ```
 Given input matrix = 
