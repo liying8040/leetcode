@@ -50,3 +50,72 @@ public:
 };
 ```
 
+(3)  First Unique Character in a String
+
+Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+
+```
+s = "leetcode"
+return 0.
+
+s = "loveleetcode",
+return 2.
+```
+
+```C++
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        int letter[26] = {0};
+        for(int i = 0; i < s.size(); i++)
+            letter[s[i] - 'a']++;
+        
+        for(int i = 0; i < s.size(); i++){
+            if(letter[s[i] - 'a'] == 1)
+                return i;
+        }
+        return -1;
+            
+    }
+};
+```
+
+(4) Valid Anagram
+
+Given two strings *s* and *t* , write a function to determine if *t* is an anagram of *s*.
+
+```
+Input: s = "anagram", t = "nagaram"
+Output: true
+```
+
+```C++
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        sort(s.begin(),s.end());
+        sort(t.begin(),t.end());      
+        return s==t;
+    }
+}; //Runtime: 60 ms
+```
+
+```C++
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.size() != t.size()) return false;
+        int letter[26] = {0};
+        for(int i = 0; i < s.size(); i++){
+            letter[s[i] - 'a'] ++;
+            letter[t[i] - 'a'] --;
+        }
+        for(int i = 0 ; i < 26; i++){
+            if(letter[i] != 0)
+                return false;
+        }
+        return true;
+    }
+}; //Runtime: 8 ms
+```
+

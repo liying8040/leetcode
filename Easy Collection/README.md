@@ -2,7 +2,7 @@
 
 * [Array](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/array.md)
 
-* Strings
+* [Strings](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/strings.md)
 
 * Linked List
 
