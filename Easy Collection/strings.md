@@ -119,3 +119,74 @@ public:
 }; //Runtime: 8 ms
 ```
 
+(5) Valid Palindrome
+
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+```
+Input: "race a car"
+Output: false
+```
+
+```C++
+class Solution {
+public:
+bool isPalindrome(string s) {
+	if (s.size() == 0) return true;
+	int i = 0;
+	int j = s.size() - 1;
+	while (i <= j)
+	{
+		if (!isalnum(s[i]))
+			i++;
+		if (!isalnum(s[j]))
+			j--;
+		if (isalnum(s[i]) && isalnum(s[j]))
+		{
+			if (tolower(s[i]) == tolower(s[j]))
+			{
+				i++;
+				j--;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+};
+```
+
+```C++
+class Solution {
+public:
+bool isPalindrome(string s) {
+    if(s.size() == 0) return true;
+	int len = 0;
+	for (auto i : s) {
+		if (isalnum(i))
+			len++;
+	}
+	stack<char> stacks;
+	int n = 0;
+	for (int i = 0; i < s.size(); i++) {
+		if (n < len / 2 && isalnum(s[i])) {
+			stacks.push(tolower(s[i]));
+			n++;
+		}
+		else if (len % 2 == 1 && n == len / 2 && isalnum(s[i])) {
+			n++;
+		}else if (n >= len / 2 && isalnum(s[i])) {
+			n++;
+			if (stacks.top() != tolower(s[i]))
+				return false;
+			else
+				stacks.pop();
+		}
+	}
+	return true;
+}
+};
+```
+
