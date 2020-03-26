@@ -190,3 +190,87 @@ bool isPalindrome(string s) {
 };
 ```
 
+(6) String to Integer (atoi)
+
+Implement `atoi` which converts a string to an integer.
+
+- Only the space character `' '` is considered as whitespace character.
+- Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231, 231 − 1]. If the numerical value is out of the range of representable values, INT_MAX (231 − 1) or INT_MIN (−231) is returned.
+
+```C++
+class Solution {
+public:
+    int myAtoi(string str) {
+        int sign = 1;
+        int res = 0;
+        int flag = 0;
+        for(int i = 0; i < str.size(); i++){
+            if(isspace(str[i]) && flag == 0){
+                continue;
+            }else if(str[i] == '-' && res == 0 && flag == 0){
+                sign = -1;
+                flag = 1;
+            }else if(str[i] == '+' && res == 0 && flag == 0){
+                sign = 1;
+                flag = 1;
+            }else if(isdigit(str[i])){
+                if(res < INT_MIN/10 || (res == INT_MIN/10 && (str[i] - '0') > 8))
+                    return INT_MIN;
+                else if(res > INT_MAX / 10 || (res == INT_MAX / 10 && (str[i] - '0') > 7))
+                    return INT_MAX;
+                else{
+                    res = res * 10 + sign * (str[i] - '0');
+                    flag = 1; 
+                }                    
+            }else{
+                return res;
+            }
+        }
+        return res;
+    }
+}; //要用INT_MIN 和 INT_MAX，不能用pow(2,31)-1代替INT_MAX,因为int不能处理pow(2,31)这个溢出的值。
+```
+
+
+
+(7) Implement strStr()
+
+Implement [strStr()](http://www.cplusplus.com/reference/cstring/strstr/).
+
+Return the index of the first occurrence of needle in haystack, or **-1** if needle is not part of haystack.
+
+```
+Input: haystack = "hello", needle = "ll"
+Output: 2
+```
+
+```C++
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if (needle.empty()) return 0;
+        return (haystack.find(needle) == string::npos) ? -1 :haystack.find(needle);
+        
+    }
+};
+```
+
+```C++
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if(needle.empty()) return 0;
+        int temp = haystack.size() - needle.size() + 1;   //注意:temp不能放在for循环中
+        for(int i = 0; i < temp; i++){
+            for(int j = 0; j < needle.size(); j++){
+                if(haystack[i+j] != needle[j])
+                    break;
+                else if(j == needle.size() - 1 )
+                    return i;
+            }
+        }
+        return -1;
+    }
+};// .size()方法返回值是unsigned int（size_t）类型，如果haystack.size() - needle.size() + 1是负数的话，会变成正数。
+```
+
