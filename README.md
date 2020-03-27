@@ -7,7 +7,7 @@ This is LeetCode's official curated list of Top classic interview questions to h
 
   * [Strings](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/strings.md)
 
-  * Linked List
+  * [Linked List](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/linked%20list.md)
 
   * Trees
 

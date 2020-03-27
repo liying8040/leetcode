@@ -1,5 +1,3 @@
-
-
 # linked list
 
 (1)  Delete Node in a Linked List
@@ -64,7 +62,7 @@ Given linked list: 1->2->3->4->5, and n = 5.
 After removing the second node from the end, the linked list becomes 2->3->4->5.
 ```
 
-<img src="E:\git\leetcode\img\link_list2.jpg" style="zoom:50%;" />
+<img src=".\img\link_list(2).jpg" alt="link_list(2)" style="zoom:50%;" />
 
 ```C++
 /**
