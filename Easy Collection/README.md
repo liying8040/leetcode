@@ -6,7 +6,7 @@
 
 * [Linked List](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/linked%20list.md)
 
-* Trees
+* [Trees](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/trees.md)
 
 * Sorting and Searching
 
