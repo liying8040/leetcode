@@ -244,3 +244,138 @@ public:
 };
 ```
 
+(5) Palindrome Linked List
+
+Given a singly linked list, determine if it is a palindrome.
+
+```
+Input: 1->2
+Output: false
+```
+
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *reverse(ListNode *head){
+        ListNode *pre, *cur;
+        cur = head -> next;
+        head -> next = NULL;
+        while(cur != NULL){
+            pre = cur;
+            cur = cur -> next;
+            pre -> next = head -> next;
+            head -> next = pre;
+        }
+        return head;
+    }
+    
+    bool compare(ListNode *head1, ListNode *head2){
+        while(head2 != NULL){
+            if (head1 -> val != head2 -> val)
+                return false;
+            else{
+                head1 = head1 -> next;
+                head2 = head2 -> next;
+            }
+        }
+        return true;
+    }
+    
+    bool isPalindrome(ListNode* head) {
+        if(head == NULL) return true;
+        ListNode *fast = head, *slow = head;   //让快指针走2步，慢指针走1步，来找中心位置。
+        while(fast -> next != NULL){
+            fast = fast -> next;
+            if(fast -> next != NULL)
+                fast = fast -> next;
+            else
+                break;
+            slow = slow -> next;
+        }
+        ListNode * re_slow = reverse(slow);   // 多一个head节点，相当于C中的指向指针的指针。
+        return compare(head, re_slow-> next);  //取 head -> next。
+    }
+};  
+```
+
+```C++
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        vector<int> vec;
+        
+        while(head != NULL){
+            vec.push_back(head -> val);
+            head = head -> next;
+        }
+        for(int i = 0; i < vec.size()/2; i++){
+            if(vec[i] != vec[vec.size() - i - 1])
+                return false;
+        }
+        return true;
+    }
+}; // 不推荐该方法。
+```
+
+(6) Linked List Cycle
+
+Given a linked list, determine if it has a cycle in it.
+
+To represent a cycle in the given linked list, we use an integer `pos` which represents the position (0-indexed) in the linked list where tail connects to. If `pos` is `-1`, then there is no cycle in the linked list.
+
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL || head->next == NULL) return false;
+        set<ListNode *> node;
+        while(head != NULL)
+        {
+            if(node.find(head) == node.end())
+                node.insert(head);             
+            else
+                return true;  
+            head = head->next;
+        }
+        return false;
+    }
+};
+```
+
+```C++
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL) return false;
+        ListNode *fast = head, *slow = head;  //快慢指针，快指针走2步，慢指针1步，找循环。
+        while(fast -> next != NULL){
+            fast = fast -> next;
+            if(fast -> next != NULL)
+                fast = fast -> next;
+            else
+                return false;
+            slow = slow -> next;
+            if(fast == slow)
+                return true;
+        }
+        return false;
+    }
+};
+```
+
