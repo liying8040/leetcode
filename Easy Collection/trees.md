@@ -1,6 +1,54 @@
 # trees
 
-:one: Maximum Depth of Binary Tree
+广度优先遍历BFS：一般用queue实现。
+
+深度优先遍历DFS：一般用stack实现。
+
+深度优先遍历的递归算法：
+
+先序遍历：
+
+```C++
+void preorder(TreeNode *root, vector<int> &res){
+    if(root){
+        res.push_back(root -> val);
+        if(root -> left)
+            inorder(root -> left, res);            
+        if(root -> right)
+            inorder(root -> right, res);
+    }
+}
+```
+中序遍历：
+
+```C++
+void inorder(TreeNode *root, vector<int> &res){
+    if(root){
+        if(root -> left)
+            inorder(root -> left, res);        
+        res.push_back(root -> val);
+        if(root -> right)
+            inorder(root -> right, res);
+    }
+}
+```
+后序遍历：
+
+```C++
+    void inorder(TreeNode *root, vector<int> &res){
+        if(root){
+            if(root -> left)
+                inorder(root -> left, res);        
+            if(root -> right)
+                inorder(root -> right, res);
+            res.push_back(root -> val);
+        }
+    }
+```
+
+
+
+:triangular_flag_on_post:(1) Maximum Depth of Binary Tree
 
 Given a binary tree, find its maximum depth.
 
@@ -37,7 +85,7 @@ public:
 };
 ```
 
-:two: ​Validate Binary Search Tree
+:triangular_flag_on_post:(2) Validate Binary Search Tree
 
 Given a binary tree, determine if it is a valid binary search tree (BST).
 
@@ -100,4 +148,97 @@ public:
 
 
 
-:three: ​ 
+:triangular_flag_on_post:(3)  Symmetric Tree
+
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+不能先用中序遍历存为一个vector，再判断vector是否对称。因为下图是不对称的。
+
+```
+    1
+   / \
+  2   2
+ /   / 
+2   2
+```
+
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isMirror(TreeNode* t1, TreeNode* t2)
+    {
+        if (t1 == NULL && t2 == NULL) return true;
+        if (t1 == NULL || t2 == NULL) return false;
+        return (t1->val)==(t2->val) && isMirror(t1->left, t2->right) && isMirror(t1->right, t2->left);
+        
+    }
+    bool isSymmetric(TreeNode* root) 
+    {
+        if(!root) return true;
+        return isMirror(root->left, root->right);
+    }
+};
+```
+
+:triangular_flag_on_post:(4) Binary Tree Level Order Traversal
+
+Given a binary tree, return the *level order* traversal of its nodes' values. (ie, from left to right, level by level).
+
+```
+given:
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+```
+
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> res;
+    
+    void helper(TreeNode *root, int level){
+        if(level == res.size())
+            res.push_back({});                   //新增加一维空vector<int>
+        res[level].push_back(root -> val);
+        if(root -> left)
+            helper(root->left, level+1);
+        if(root -> right)
+            helper(root->right, level+1);
+    }
+    
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(!root) return res;
+        helper(root,0);
+        return res;
+        
+    }
+};
+```
+
