@@ -1,0 +1,3 @@
+# dynamic programming
+
+(1) 
