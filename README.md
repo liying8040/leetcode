@@ -11,9 +11,9 @@ This is LeetCode's official curated list of Top classic interview questions to h
 
   * [Trees](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/trees.md)
 
-  * Sorting and Searching
+  * [Sorting and Searching](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/sorting%20and%20searching.md)
 
-  * Dynamic Programming
+  * [Dynamic Programming](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/dynamic%20programming.md)
 
   * Design
 
