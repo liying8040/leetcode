@@ -52,3 +52,62 @@ public:
 };
 ```
 
+(2) First Bad Version
+
+You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+
+```
+Given n = 5, and version = 4 is the first bad version.
+
+call isBadVersion(3) -> false
+call isBadVersion(5) -> true
+call isBadVersion(4) -> true
+
+Then 4 is the first bad version. 
+```
+
+```C++
+// Forward declaration of isBadVersion API.
+bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        long first = 1, end = n;
+        long mid = (first + end) / 2;     //不能这样写，因为如果n是(2^31-1)的话，int会溢出。
+        while(first < end){
+            if (isBadVersion(mid)){
+                end = mid;
+            }else{
+                first = mid + 1;
+            }
+            mid = (first + end) / 2;    //不能这样写，因为如果n是(2^31-1)的话，int会溢出。
+        }
+        return mid;
+    }
+};
+```
+
+```C++
+// The API isBadVersion is defined for you.
+// bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {  
+        int first = 1;
+        int end = n;
+        int mid = 0;
+        while(first <= end){
+            mid = first + (end - first)/2;         //正确的写法
+            if(isBadVersion(mid)){
+                end = mid;
+                if(first == end) return mid;
+            }else
+                first = mid + 1;             
+        }
+        return 0;        
+    }
+};
+```
+
