@@ -113,7 +113,7 @@ Output: 6
 Explanation: [4,-1,2,1] has the largest sum = 6.
 ```
 
-```
+```C++
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) 
