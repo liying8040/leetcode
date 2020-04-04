@@ -150,3 +150,59 @@ public:
 };
 ```
 
+(4) House Robber
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and **it will automatically contact the police if two adjacent houses were broken into on the same night**.
+
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight **without alerting the police**.
+
+```
+Input: [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+             Total amount you can rob = 2 + 9 + 1 = 12.
+```
+
+```C++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        vector<int> DP(nums);
+        if (nums.size() == 0) return 0;
+        if (nums.size() == 1) return nums[0];
+        if (nums.size() == 2) return max(nums[0], nums[1]);
+        
+        DP[0] = nums[0];
+        DP[1] = max(nums[0], nums[1]);
+        int i = 2;
+        while(i < nums.size())
+        {
+            DP[i] = max(nums[i] + DP[i-2], DP[i-1]);
+            i++;
+        }
+        return DP[nums.size()-1];
+        
+    }
+};
+```
+
+```C++
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        if(nums.size() == 1) return nums[0];
+        if(nums.size() == 2) return max(nums[0], nums[1]);
+        
+        vector<int> res(nums.begin(), nums.end());
+        int max = res[0];
+        for(int i = 2; i < res.size(); i++){
+            max = max > res[i-2] ? max : res[i-2];
+            res[i] = nums[i] + max;
+        }
+        return res[res.size()-1] > res[res.size()-2] ? res[res.size()-1] : res[res.size()-2];
+        
+    }
+};  //res[i] = max(res[i-2]) + nums[i]
+```
+
