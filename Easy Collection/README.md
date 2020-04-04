@@ -12,8 +12,8 @@
 
 * [Dynamic Programming](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/dynamic%20programming.md)
 
-* Design
+* [Design](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/design.md)
 
-* Math
+* [Math](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/math.md)
 
-* Others
+* [Others](https://github.com/liying8040/leetcode/blob/master/Easy%20Collection/others.md)
