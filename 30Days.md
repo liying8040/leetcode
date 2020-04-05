@@ -66,6 +66,8 @@ public:
 };
 ```
 
+
+
 #### (Day-3) Maximum Sub-array
 
 Given an integer array `nums`, find the contiguous sub-array (containing at least one number) which has the largest sum and return its sum.
@@ -145,9 +147,53 @@ public:
 
 
 
+#### (Day-5) Best Time to Buy and Sell Stock II
+
+Say you have an array for which the *i*th element is the price of a given stock on day *i*.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
+
+**Note:** You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+
+```
+Input: [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
+             engaging multiple transactions at the same time. You must sell before buying again.
+```
+
+```C++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int res = 0;
+        if(prices.size() != 0){
+            for(int d = 0; d < prices.size() - 1; ++d){
+                if(prices[d+1] > prices[d])
+                    res += prices[d+1] - prices[d];
+            }
+        }
+        return res;
+    }
+};
+```
+
+```C++
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int res = 0;
+        for(int i = 1; i < prices.size(); i++){
+            if(prices[i] > prices[i-1])
+                res += prices[i] - prices[i-1];
+        }
+        return res;
+    }
+};
+```
 
 
-#### (Day-5)
 
 #### (Day-6)
 
