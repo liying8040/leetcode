@@ -70,3 +70,56 @@ public:
 };
 ```
 
+**(2) Count Primes** 
+
+Count the number of prime numbers less than a non-negative number, ***n\***.
+
+```
+Input: 10
+Output: 4
+Explanation: There are 4 prime numbers less than 10, they are 2, 3, 5, 7.
+```
+
+```C++
+class Solution {
+public:
+    int countPrimes(int n) {
+        if (n==0) return 0;
+        vector<bool> prime(n, true);
+        prime[0] = false;
+        prime[1] = false;
+        for(int i = 0; i < sqrt(n); i++){               //
+            if(prime[i]){
+                for(int j = i * i; j < n; j = j + i){
+                    prime[j] = false;
+                }
+            }
+            
+        }
+        return count(prime.begin(), prime.end(), true);
+        
+    }
+};
+```
+
+(3) Power of Three
+
+Given an integer, write a function to determine if it is a power of three.
+
+```
+Input: 27
+Output: true
+```
+
+```C++
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        if(n <= 0) return false;
+        double rb = log10(n)/log10(3);
+        int ri = log10(n)/log10(3);
+        return rb-ri == 0;
+    }
+};
+```
+
