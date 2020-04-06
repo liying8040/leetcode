@@ -195,6 +195,49 @@ public:
 
 
 
-#### (Day-6)
+#### (Day-6) Group Anagrams
+
+Given an array of strings, group anagrams together.
+
+```C++
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+```
+
+**Note:**
+
+- All inputs will be in lowercase.
+- The order of your output does not matter.
+
+```C++
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        
+        vector<vector<string>> res;
+        unordered_map<string, int> work;               // key保存的是排序的string，value保存的是下标。
+        int sub = 0;                                   // value
+        for(auto s : strs){
+            string temp = s;
+            sort(temp.begin(),temp.end());
+            if(work.count(temp)){       //用count，而不用find，因为找不到的话，count返回0，find返work.end()
+                res[work[temp]].push_back(s);
+            }else{
+                vector<string> vec(1,s);            //vector的初始化
+                res.push_back(vec);
+                work.insert({temp, sub++});
+            }
+        }
+        return res;
+    }
+};
+```
+
+
 
 #### (Day-7)
