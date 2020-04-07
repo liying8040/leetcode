@@ -240,4 +240,39 @@ public:
 
 
 
-#### (Day-7)
+#### (Day-7) Counting Elements
+
+Given an integer array `arr`, count element `x` such that `x + 1` is also in `arr`.
+
+If there are duplicates in `arr`, count them separately.
+
+```c++
+Input: arr = [1,1,2]
+Output: 2
+Explanation: Two 1s are counted cause 2 is in arr.
+```
+
+```C++
+Input: arr = [1,2,2]
+Output: 1
+Explanation: One 1 is counted cause 2 is in arr.
+```
+
+```C++
+class Solution {
+public:
+    int countElements(vector<int>& arr) {
+        multiset<int> sets(arr.begin(), arr.end());
+        multiset<int> sets2(arr.begin(), arr.end());
+        int res = 0;
+        for(int i = 0; i < arr.size(); i++){
+            if(sets.count(arr[i]+1)){
+                res += sets2.count(arr[i]);
+                sets.erase(arr[i]+1);
+            }
+        }
+        return res;
+    }
+};
+```
+
