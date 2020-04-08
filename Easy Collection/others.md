@@ -98,6 +98,8 @@ public:
 };
 ```
 
+
+
 (3) Reverse Bits
 
 Reverse bits of a given 32 bits unsigned integer.
@@ -153,6 +155,157 @@ public:
             pos--;
         }
         return res;
+    }
+};
+```
+
+
+
+(4) Pascal's Triangle
+
+Given a non-negative integer *numRows*, generate the first *numRows* of Pascal's triangle.
+
+```C++
+Input: 5
+Output:
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+```
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+       if(numRows==0) return vector<vector<int> >();
+        vector<vector<int>> result(numRows, vector<int>{});
+        result[0].push_back(1);
+        for(int row = 1; row < numRows; row++)
+        {
+            result[row].push_back(1);
+            for(int i = 0; i < row-1; i++)
+            {
+                result[row].push_back(result[row-1][i]+result[row-1][i+1]);    
+            }
+            result[row].push_back(1);
+        }
+        return result;
+        
+    }
+};
+```
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> res;
+        for(int i = 0; i < numRows; i++){
+            vector<int> subres(1,1);
+            for(int j = 1; j < i; j++){
+                subres.push_back(res[i-1][j-1] + res[i-1][j]);
+            }
+            if(i > 0)
+                subres.push_back(1);
+            
+            res.push_back(subres); 
+        }
+        return res;
+    }
+};
+```
+
+
+
+(5) Valid Parentheses
+
+Given a string containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.
+
+An input string is valid if:
+
+1. Open brackets must be closed by the same type of brackets.
+2. Open brackets must be closed in the correct order.
+
+Note that an empty string is also considered valid.
+
+```C++
+Input: "{[]}"
+Output: true
+```
+
+```C++
+Input: "([)]"
+Output: false
+```
+
+```C++
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> stacks;
+        for(auto i : s){
+            if(i == '(' || i == '[' || i == '{')
+                stacks.push(i);
+            else if(i == ')' && !stacks.empty() && stacks.top() == '(' )
+                stacks.pop();
+            else if(i == ']' && !stacks.empty() && stacks.top() == '[' )
+                stacks.pop();
+            else if(i == '}' && !stacks.empty() && stacks.top() == '{' )
+                stacks.pop();
+            else
+                return false;
+        }
+        return stacks.empty();
+        
+    }
+};
+```
+
+
+
+(6) Missing Number
+
+Given an array containing *n* distinct numbers taken from `0, 1, 2, ..., n`, find the one that is missing from the array.
+
+```C++
+Input: [3,0,1]
+Output: 2
+```
+
+```C++
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        sort(nums.begin(), nums.end(),[](const int &i, const int &j){return i > j;});
+        int sum = accumulate(nums.begin(),nums.end(),0);
+        int leave = *nums.begin() * (*nums.begin()+1)/2 - sum;
+        if(leave == 0)
+            if(*(nums.end()-1) == 0)
+                return *nums.begin()+1;
+            else
+                return 0;
+        else
+            return leave;
+    }
+}; // 垃圾。。
+```
+
+```C++
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        auto iter = max_element(nums.begin(), nums.end());
+        if (nums.size() != *iter)
+            return nums.size();
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        return nums.size() * (nums.size() + 1) / 2 - sum ;
+        
     }
 };
 ```
