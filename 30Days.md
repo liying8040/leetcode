@@ -316,7 +316,40 @@ public:
 
 
 
-#### (Day-9) 
+#### (Day-9) Backspace String Compare
+
+Given two strings `S` and `T`, return if they are equal when both are typed into empty text editors. `#` means a backspace character.
+
+```C++
+Input: S = "ab#c", T = "ad#c"
+Output: true
+Explanation: Both S and T become "ac".
+```
+
+```C++
+class Solution {
+public:
+    string func(string S){
+        int slow = -1, fast = 0;
+        while(fast < S.size()){
+            if(S[fast] == '#'){
+                slow = slow == -1 ? -1 : slow-1;
+            }else if(S[fast] == S[slow+1]){      
+                slow++;
+            }else{
+                S[slow+1] = S[fast];
+                slow++;
+            }
+            fast++;
+        }
+        return S.substr(0,slow+1);
+    }
+    
+    bool backspaceCompare(string S, string T) {
+        return func(S) == func(T);
+    }
+};
+```
 
 
 
