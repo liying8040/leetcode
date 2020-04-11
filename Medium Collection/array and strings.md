@@ -137,3 +137,73 @@ public:
 };
 ```
 
+(3) Group Anagrams
+
+Given an array of strings, group anagrams together.
+
+```C++
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+Output:
+[
+  ["ate","eat","tea"],
+  ["nat","tan"],
+  ["bat"]
+]
+```
+
+```C++
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        map<string, int> maps;
+        int pos = 0;
+        vector<vector<string>> res;
+        for(int i = 0; i < strs.size(); i++){
+            string temp = strs[i];
+            sort(temp.begin(), temp.end());
+            if(maps.count(temp)){
+                res[maps[temp]].push_back(strs[i]);
+            }else{
+                res.push_back({strs[i]});
+                maps.insert({temp, pos});
+                pos++;
+            }
+        }
+        return res;
+    }
+};
+```
+
+
+
+(4) Longest Substring Without Repeating Characters
+
+Given a string, find the length of the **longest substring** without repeating characters.
+
+```C++
+Input: "abcabcbb"
+Output: 3 
+Explanation: The answer is "abc", with the length of 3. 
+```
+
+```C++
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int max = 0;
+        int first = 0;
+        for(int end = 0; end < s.size(); end++){
+            string sub = s.substr(first,end-first);
+            int pos = sub.find(s[end]);  //这是sub的pos           
+            if(pos != string::npos){     //找到了重复的
+                max = (end - first) > max ? (end - first) : max;
+                first = first+pos+1;
+            }else{                       //没找到重复的
+                max = (end - first + 1) > max ? (end - first + 1) : max;
+            }
+        }
+        return max;
+    }
+};
+```
+
