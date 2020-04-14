@@ -1,3 +1,34 @@
+#### (Day-13) Contiguous Array
+
+Given a binary array, find the maximum length of a contiguous subarray with equal number of 0 and 1.
+
+```C++
+Input: [0,1]
+Output: 2
+Explanation: [0, 1] is the longest contiguous subarray with equal number of 0 and 1.
+```
+
+```C++
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        map<int,int> maps;
+        int max_len = 0;
+        int val = 0;
+        for(int i = 0; i < nums.size(); i++){
+            val += 2 * nums[i] - 1;   // {0:-1, 1:1}
+            if(val == 0)
+                max_len = i+1;
+            else if(maps.count(val))
+                max_len = max(max_len,i-maps[val]);
+            else
+                maps.insert({val,i});
+        }
+        return max_len;
+    }
+}; //runtime 无敌高
+```
+
 #### (Day-12) Last Stone Weight [Easy]
 
 We have a collection of stones, each stone has a positive integer weight.
