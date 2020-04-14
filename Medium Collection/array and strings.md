@@ -244,3 +244,39 @@ public:
 };
 ```
 
+(6) Increasing Triplet Subsequence
+
+Given an unsorted array return whether an increasing subsequence of length 3 exists or not in the array.
+
+Formally the function should:
+
+> Return true if there exists *i, j, k*
+> such that *arr[i]* < *arr[j]* < *arr[k]* given 0 ≤ *i* < *j* < *k* ≤ *n*-1 else return false.
+
+**Note:** Your algorithm should run in O(*n*) time complexity and O(*1*) space complexity.
+
+```
+Input: [1,2,3,4,5]
+Output: true
+```
+
+```C++
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        if(nums.size() < 3) return false;
+        int small = INT_MAX, mid = INT_MAX;
+        for(auto i:nums){
+            if(i <= small)
+                small = i;
+            else if(i <= mid)
+                mid = i;
+            else
+                return true;
+        }
+        return false;
+        
+    }
+};  //神仙解法
+```
+
