@@ -1,3 +1,45 @@
+#### (Day-14) Perform String Shifts
+
+You are given a string `s` containing lowercase English letters, and a matrix `shift`, where `shift[i] = [direction, amount]`:
+
+- `direction` can be `0` (for left shift) or `1` (for right shift). 
+- `amount` is the amount by which string `s` is to be shifted.
+- A left shift by 1 means remove the first character of `s` and append it to the end.
+- Similarly, a right shift by 1 means remove the last character of `s` and add it to the beginning.
+
+Return the final string after all operations.
+
+```C++
+Input: s = "abc", shift = [[0,1],[1,2]]
+Output: "cab"
+Explanation: 
+[0,1] means shift to left by 1. "abc" -> "bca"
+[1,2] means shift to right by 2. "bca" -> "cab"
+```
+
+```C++
+class Solution {
+public:
+    string stringShift(string s, vector<vector<int>>& shift) {
+        int k = 0;
+        for(auto vec : shift){
+            k += (2*vec[0]-1)*vec[1];    //{0:-1, 1:1}
+        }
+        int sym = k >= 0 ? 1 : -1;
+        k = abs(k);
+        k = k % s.size();
+        
+        if(k==0)
+            return s;
+        else if(sym == 1)
+            return s.substr(s.size()-k,k) + s.substr(0,s.size()-k);
+        else if(sym == -1)
+            return s.substr(k,s.size()-k) + s.substr(0,k);
+        return s;
+    }
+};
+```
+
 #### (Day-13) Contiguous Array
 
 Given a binary array, find the maximum length of a contiguous subarray with equal number of 0 and 1.
