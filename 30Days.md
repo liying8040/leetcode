@@ -1,3 +1,69 @@
+#### (Day-16) Valid Parenthesis String [贪心算法]
+
+Given a string containing only three types of characters: '(', ')' and '*', write a function to check whether this string is valid. We define the validity of a string by these rules:
+
+1. Any left parenthesis `'('` must have a corresponding right parenthesis `')'`.
+2. Any right parenthesis `')'` must have a corresponding left parenthesis `'('`.
+3. Left parenthesis `'('` must go before the corresponding right parenthesis `')'`.
+4. `'*'` could be treated as a single right parenthesis `')'` or a single left parenthesis `'('` or an empty string.
+5. An empty string is also valid.
+
+```C++
+Input: "(*))"
+Output: True
+```
+
+```C++
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int low = 0, high = 0; //贪心算法：记录左括号的最小数目和最大数目
+        for(auto c:s){
+            low  += c == '('? 1 : -1;
+            high += c == ')'? -1 : 1;
+            if(high < 0) return false;
+            if(low < 0) low = 0;
+        }
+        return low==0;
+    }
+};
+/*
+'(': low++, high++ 
+')': low--, high--
+'*': low--, high++
+*/
+```
+
+
+
+#### (Day-15) Product of Array Except Self
+
+Given an array `nums` of *n* integers where *n* > 1,  return an array `output` such that `output[i]` is equal to the product of all the elements of `nums` except `nums[i]`.
+
+```C++
+Input:  [1,2,3,4]
+Output: [24,12,8,6]
+```
+
+```C++
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int> L(nums.size(),1), R(nums.size(),1);
+        vector<int> res(nums.size(),0);
+        int len = nums.size();
+        for(int i = 1; i < len; i++){
+            L[i] = L[i-1] * nums[i-1];
+            R[len-i-1] = R[len-i] * nums[len-i];
+        }
+        for(int i = 0; i < nums.size(); i++){
+            res[i] = L[i] * R[i];
+        }
+        return res;
+    }
+};
+```
+
 #### (Day-14) Perform String Shifts
 
 You are given a string `s` containing lowercase English letters, and a matrix `shift`, where `shift[i] = [direction, amount]`:
