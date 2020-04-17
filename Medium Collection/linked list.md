@@ -119,3 +119,121 @@ public:
 };
 ```
 
+(2) Odd Even Linked List
+
+Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+
+You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
+
+```C++
+Input: 1->2->3->4->5->NULL
+Output: 1->3->5->2->4->NULL
+```
+
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        if(head == NULL) return head;
+        if(head -> next == NULL) return head;
+       
+        ListNode *Odd = head, *Even = head->next;
+        ListNode *a = Odd, *b = Even;
+        while(b != NULL && b -> next != NULL){
+            a -> next = b -> next;
+            a = a -> next;
+            b -> next = a -> next;
+            b = b -> next;
+        }
+        a -> next = Even;
+        return Odd;
+    }
+};
+```
+
+(3) Intersection of Two Linked Lists
+
+Write a program to find the node at which the intersection of two singly linked lists begins.
+
+For example, the following two linked lists:
+
+[![img](https://assets.leetcode.com/uploads/2018/12/13/160_statement.png)](https://assets.leetcode.com/uploads/2018/12/13/160_statement.png)
+
+begin to intersect at node c1.
+
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+    {
+        if (headA == NULL || headB == NULL) return NULL;
+        ListNode *p1 = headA, *p2 = headB;
+        while(p1 != NULL || p2 != NULL)
+        {   
+            if(p1 == p2)
+                return p1;
+            p1 = p1 -> next;
+            p2 = p2 -> next;
+            if(p1 == NULL && p2 == NULL)
+                return NULL;
+            if(p1 == NULL)
+                p1 = headB;
+            if(p2 == NULL)
+                p2 = headA;
+        }
+        return NULL;
+    }
+};
+```
+
+```C++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(headA == NULL || headB == NULL) return NULL;
+        ListNode *p1 = headA, *p2 = headB;
+        int FirstA = 1, FirstB = 1;
+        while(p1 != NULL){
+            if(p1 == p2)
+                return p1;
+            if(p1 -> next == NULL && FirstA == 1){
+                p1 = headB;
+                FirstA = 0;
+            }else{
+                p1 = p1 -> next;
+            }
+            if(p2 -> next == NULL && FirstB == 1){
+                p2 = headA;
+                FirstB = 0;
+            }else
+                p2 = p2 -> next;
+        }
+        return NULL;
+    }
+}; // A+C+B+C = B+C+A+C
+```
+
