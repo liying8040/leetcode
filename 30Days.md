@@ -1,3 +1,53 @@
+#### (Day-17) Number of Islands
+
+Given a 2d grid map of `'1'`s (land) and `'0'`s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+```C++
+Input:
+11110
+11010
+11000
+00000
+
+Output: 1
+```
+
+```C++
+class Solution {
+public:
+    
+    void func(vector<vector<char>>& grid, int i, int j){
+        int row = grid.size();
+        int col = grid[0].size();
+        grid[i][j] = '0';
+        if(i+1 < row && grid[i+1][j] == '1') func(grid, i+1, j);
+        if(i-1 >= 0 && grid[i-1][j] == '1') func(grid, i-1, j);
+        if(j+1 < col && grid[i][j+1] == '1') func(grid, i, j+1);
+        if(j-1 >= 0 && grid[i][j-1] == '1') func(grid, i, j-1);
+    }
+    
+    int numIslands(vector<vector<char>>& grid) {
+        int row = grid.size();
+        if(row == 0) return 0;
+        int col = grid[0].size();
+        int res = 0;
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                if(grid[i][j] == '1'){
+                    res++;	
+                    func(grid, i, j);
+                }
+            }
+        }
+        return res;
+    }
+};
+```
+
+
+
+
+
 #### (Day-16) Valid Parenthesis String [贪心算法]
 
 Given a string containing only three types of characters: '(', ')' and '*', write a function to check whether this string is valid. We define the validity of a string by these rules:
