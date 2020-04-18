@@ -1,3 +1,42 @@
+#### (Day-18) Minimum Path Sum
+
+Given a *m* x *n* grid filled with non-negative numbers, find a path from top left to bottom right which *minimizes* the sum of all numbers along its path.
+
+**Note:** You can only move either down or right at any point in time.
+
+```c++
+Input:
+[
+  [1,3,1],
+  [1,5,1],
+  [4,2,1]
+]
+Output: 7
+Explanation: Because the path 1→3→1→1→1 minimizes the sum.
+```
+
+```C++
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        for(int i = 1; i < m; i++)
+            grid[i][0] += grid[i-1][0];
+            
+        for(int j = 1; j < n; j++)
+            grid[0][j] += grid[0][j-1];
+        
+        for(int i = 1; i < m; i++){
+            for(int j = 1; j < n; j++){
+                grid[i][j] += min(grid[i-1][j], grid[i][j-1]);
+            }
+        }
+        return grid[m-1][n-1];
+    }
+};
+```
+
+
+
 #### (Day-17) Number of Islands
 
 Given a 2d grid map of `'1'`s (land) and `'0'`s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
