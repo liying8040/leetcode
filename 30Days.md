@@ -1,3 +1,34 @@
+#### (Day-22) Sub-array Sum Equals K
+
+Given an array of integers and an integer **k**, you need to find the total number of continuous subarrays whose sum equals to **k**.
+
+```C++
+Input:nums = [1,1,1], k = 2
+Output: 2
+```
+
+```C++
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        vector<int> sums(nums.size()+1,0);
+        int res = 0;
+        for(int i = 0; i < nums.size(); i++){
+            sums[i+1] = sums[i] + nums[i];
+        }
+        for(int i = 0; i < sums.size(); i++){
+            for(int j = i+1; j < sums.size(); j++){
+                if(sums[j]-sums[i] == k)
+                    res++;
+            }
+        }
+        return res;
+    }
+};
+```
+
+
+
 #### (Day-21) Leftmost Column with at Least a One
 
 ```C++
