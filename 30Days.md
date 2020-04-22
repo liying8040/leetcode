@@ -1,3 +1,76 @@
+#### (Day-21) Leftmost Column with at Least a One
+
+```C++
+/**
+ * // This is the BinaryMatrix's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class BinaryMatrix {
+ *   public:
+ *     int get(int x, int y);
+ *     vector<int> dimensions();
+ * };
+ */
+
+class Solution {
+public:
+    int leftMostColumnWithOne(BinaryMatrix &binaryMatrix) {
+        vector<int> dim = binaryMatrix.dimensions();
+        int i = 0, j = dim[1]-1;
+        int res = -1;
+        while(i < dim[0] && j >= 0){
+            if(binaryMatrix.get(i,j) == 0)
+                i += 1;
+            else if(binaryMatrix.get(i,j) == 1){
+                res = j;
+                j -= 1;
+            }
+        }
+        return res;
+    }
+};
+```
+
+
+
+#### (Day-20) Construct Binary Search Tree from Preorder Traversal
+
+Return the root node of a binary **search** tree that matches the given `preorder` traversal.
+
+*(Recall that a binary search tree is a binary tree where for every node, any descendant of `node.left` has a value `<` `node.val`, and any descendant of `node.right` has a value `>` `node.val`. Also recall that a preorder traversal displays the value of the `node` first, then traverses `node.left`, then traverses `node.right`.)*
+
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    
+    TreeNode* helper(int low, int high, vector<int>& preorder){
+        if (low > high) return NULL;
+        int i;
+        for (i = low + 1; i <= high; ++i) {     //这部分效率太低，应该改成二分查找，或者hash查找 
+            if (preorder[i] > preorder[low]) {
+                break;
+            }
+        }
+        TreeNode *root = new TreeNode(preorder[low]);
+        root -> left = helper(low+1, i-1, preorder);
+        root -> right = helper(i, high, preorder);
+        return root;
+    }
+    
+    TreeNode* bstFromPreorder(vector<int>& preorder){
+        return helper(0, preorder.size()-1, preorder);
+    }
+};
+```
+
 #### (Day-18) Minimum Path Sum
 
 Given a *m* x *n* grid filled with non-negative numbers, find a path from top left to bottom right which *minimizes* the sum of all numbers along its path.

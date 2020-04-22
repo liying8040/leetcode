@@ -12,7 +12,7 @@ Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807.
 ```
 
-```
+```C++
 /**
  * Definition for singly-linked list.
  * struct ListNode {
