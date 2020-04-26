@@ -1,3 +1,70 @@
+#### (Day-26) Longest Common Subsequence
+
+最长公共子序列问题一般都是用二维动态规划来解，因为动态规划的做法相当于是“穷举+剪枝”。【[参考至这里](https://leetcode-cn.com/problems/longest-common-subsequence/solution/dong-tai-gui-hua-zhi-zui-chang-gong-gong-zi-xu-lie/)】
+
+### 一、动态规划思路
+
+**第一步，一定要明确 `dp` 数组的含义**。
+
+**第二步，定义 base case。**
+
+**第三步，找状态转移方程。**
+
+```C++
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        int len1 = text1.size(), len2 = text2.size();
+        vector<int> temp(len2+1,0);
+        vector<vector<int>> dp(len1+1,temp);
+        for(int i = 1; i < len1 + 1; i++){
+            for(int j = 1; j  < len2 + 1; j++){
+                if(text1[i-1] == text2[j-1])
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                else
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+        return dp[len1][len2];
+    }
+};
+```
+
+
+
+#### (Day-23) Bitwise AND of Numbers Range
+
+Given a range [m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all numbers in this range, inclusive.
+
+The hardest part of this problem is to find the regular pattern.
+For example, for number `26 to 30`
+Their binary form are:
+`11010`
+`11011`
+`11100`　　
+`11101`　　
+`11110`
+
+Because we are trying to find bitwise AND, so if any bit there are at least one `0` , it always `0`. In this case, it is `11000`.
+So we are go to cut all these bit that they are different. In this case we cut the right `3` bit.
+
+I think after understand this, the code is trivial:
+
+```C++
+class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int zeros = 0;
+        while(m != n){
+            m >>= 1;
+            n >>= 1;
+            zeros ++;
+        }
+        return m << zeros;
+    }
+};
+```
+
 #### (Day-22) Sub-array Sum Equals K
 
 Given an array of integers and an integer **k**, you need to find the total number of continuous subarrays whose sum equals to **k**.
