@@ -1,3 +1,45 @@
+#### (Day-28) First Unique Number
+
+You have a queue of integers, you need to retrieve the first unique integer in the queue.
+
+Implement the `FirstUnique` class:
+
+- `FirstUnique(int[] nums)` Initializes the object with the numbers in the queue.
+- `int showFirstUnique()` returns the value of **the first unique** integer of the queue, and returns **-1** if there is no such integer.
+- `void add(int value)` insert value to the queue.
+
+```C++
+class FirstUnique {
+    unordered_set<int> unique,nonunique;
+    vector<int> vec;
+public:
+    FirstUnique(vector<int>& nums) {
+        for(auto num:nums)
+            add(num);
+    }
+    
+    int showFirstUnique() {
+        for(int i = 0; i < vec.size(); i++){
+            if(unique.count(vec[i]))
+                return vec[i];
+        }
+        return -1;
+    }
+    
+    void add(int value) {
+        if(nonunique.count(value))
+            return;
+        else if(unique.count(value)){
+            unique.erase(value);
+            nonunique.insert(value);
+            return;
+        }
+        unique.insert(value);
+        vec.push_back(value);
+    }
+};
+```
+
 #### (Day-26) Longest Common Subsequence
 
 最长公共子序列问题一般都是用二维动态规划来解，因为动态规划的做法相当于是“穷举+剪枝”。【[参考至这里](https://leetcode-cn.com/problems/longest-common-subsequence/solution/dong-tai-gui-hua-zhi-zui-chang-gong-gong-zi-xu-lie/)】
